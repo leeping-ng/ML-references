@@ -13,27 +13,30 @@
 The mlp folder contains the following files:
 
 **2.1 config.py**
-- This is the configuration file where the configurable parameters are stored and can be modified
+- This is the configuration file where the configurable parameters are stored and can be modified. Make sure the file is saved after making changes.
 - *bin_house_age*: Set to True if you want to sort the 'X2 house age' feature into bins for the machine learning pipeline to process. Set to False if not.
 - *test_train_ratio*: The ratio of the test to training dataset, which should be a value between 0 and 1. I usually set it to 0.25.
 - *cv_folds*: The number of cross-validation folds to use. I usually set it to 5.
-- *model_name*: One of the following 6 machine learning models can be selected. You can copy and paste from the examples in config.py. 
+- *model_name*: One of the following 6 machine learning models can be selected. You can copy and paste from the examples in config.py. Ensure that the model_name is passed as a string (include quotation marks).
   - 'LinearRegression'
   - 'Lasso' 
   - 'Ridge'
   - 'RandomForestRegressor'
   - 'AdaBoostRegressor'
   - 'GradientBoostingRegressor'
-- *grid_search_params*: The range of parameters to perform grid search on. You can copy and paste from the examples in config.py.
+- *grid_search_params*: The range of parameters to perform grid search on. This is unique to each machine learning model. You can copy and paste from the examples in config.py.
+  - Ensure that the parameter name and parameters are passed as key-value pairs
+  - Example: grid_search_params = {'model__n_estimators': [int(x) for x in np.linspace(10, 1000, 10)], 
+                      'model__max_features': ['auto', 'sqrt']}
   - If adding a new parameter such as 'min_samples_split', ensure that 'model__' precedes this, in other words: 'model__min_samples_split' should be the name of the key
 
 **2.2 utils.py**
 - This is the file where the following helper functions are stored
 - *get_model()*: This function takes in the model_name from config.py, imports the model from the right library, and returns the imported model to main.py
 - *bin_house_age()*: This function takes in the dataframe and bins the 'X2 house age' feature, returning a dataframe with the binned features to main.py
-  - This function is also called in the Jupyter Notebook for Task 1 (EDA). When running the Jupyter Notebook, ensure that the path environment variable is set to utils.py, to be able to use this function
+  - This function is also called in the Jupyter Notebook for Task 1 (EDA). When running the Jupyter Notebook, ensure that the path environment variable is set to the mlp folder containing utils.py, to be able to use this function
 
 **2.3 main.py**
 - This is the main program that will be executed by run.sh
-- The helper functions from utils.py and variables defined in config.py are called here
+- The helper functions from utils.py and variables defined in config.py are imported and called here
 - The machine learning pipeline will read the data from the URL, pre-process the data, train the selected model, and output the Root Mean Squared Error (RMSE) of the model
