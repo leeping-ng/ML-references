@@ -1,4 +1,4 @@
-# AI Apprenticeship Programme - Housing Prices in Sindian District, Taiwan
+# Housing Prices
 
 **1. How to Run the Code**
 - Check that all required libraries listed in requirements.txt are installed
